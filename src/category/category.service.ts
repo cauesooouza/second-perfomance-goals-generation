@@ -22,11 +22,11 @@ export class CategoryService {
     }
 
     async findAll(): Promise<Category[]> {
-        return await this.categoryRepository.find();
+        return await this.categoryRepository.find({ relations: { products: true } });
     }
 
     async findById(id: number): Promise<Category> {
-        let findedCategory = await this.categoryRepository.findOne({ where: { id } })
+        let findedCategory = await this.categoryRepository.findOne({ where: { id }, relations: { products: true } })
 
         if (!findedCategory) {
             throw new HttpException("Not Found", HttpStatus.NOT_FOUND)
@@ -40,11 +40,11 @@ export class CategoryService {
             throw new HttpException("Fill correctly", HttpStatus.BAD_REQUEST)
         }
 
-        return await this.categoryRepository.find({ where: { name } });
+        return await this.categoryRepository.find({ where: { name }, relations: { products: true } });
     }
 
     protected async findCategory(id: number): Promise<Category> {
-        return await this.categoryRepository.findOneBy({id})
+        return await this.categoryRepository.findOneBy({ id })
     }
 
     async update(category: Category): Promise<Category> {

@@ -1,8 +1,8 @@
-import { IsDate, IsNumber, IsString, Length } from "class-validator";
+import { IsDateString, IsNumber, IsString, Length } from "class-validator";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Category } from "../category/category.entity";
 
-@Entity()
+@Entity({name: 'products'})
 export class Product {
     @PrimaryGeneratedColumn()
     id: number;
@@ -29,6 +29,6 @@ export class Product {
     quantity:number;
 
     @Column()
-    @IsDate()
+    @IsDateString()
     expirationDate: Date;
 }
